@@ -68,20 +68,23 @@
 
      <main>
         <div class="cards2">
-            <form >
+            <form action="add-materia" method="post">
                 <h3>Crear materia</h3>
                 <br>
                 <div class="form-group">
-                  <label>Nombres materia:</label>
-                  <input type="text" name="nombre" class="form-control"  required placeholder="Ingrese el nombre de la materia">
+                    <label>Nombres materia:</label>
+                    <input type="text" name="nombreMateria" class="form-control" required placeholder="Ingrese el nombre de la materia">
                 </div>
-              
                 <div class="form-group">
-                  <label >Codigo:</label>
-                  <input type="number" name="codigo" class="form-control"  required placeholder="Ingrese el codigo de la materia">
+                    <label>Código:</label>
+                    <input type="number" name="codigoMateria" class="form-control" required placeholder="Ingrese el código de la materia">
+                </div>
+                <div class="form-group">
+                    <label>Notas:</label>
+                    <input type="text" name="notaFinal" class="form-control" required placeholder="Ingrese la nota final">
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
-              </form>
+            </form>
               <br>
     <br>
     <div class="header_fixed">
