@@ -3,19 +3,15 @@ package Percistencia;
 import Logica.Actividades;
 import Logica.Actividades.TipoActividad;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 public  class ActividadesDao implements InterfaceDAO<Actividades> {
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String URL = "jdbc:mysql://127.0.0.1:3306/mydb?allowPublicKeyRetrieval=true&useSSL=false";
-    private final String USER = "Dilan";
-    private final String PASSWORD = "123";
+    private final String USER = "root";
+    private final String PASSWORD = "";
 
     public List<Actividades> findAll() {
         List<Actividades> actividadesList = new ArrayList<>();
@@ -82,35 +78,80 @@ public  class ActividadesDao implements InterfaceDAO<Actividades> {
         return null;
     }
 
-    public boolean add(Actividades actividades) {
-        try {
+    @Override
+    public boolean add(Actividades student) {
+
+        String id = "0";
+
+        String name = student.getActividadesNombre();
+
+        TipoActividad city = student.getTipoActividad();
+
+        Date fechaEntrega = student.getFechaEntrega();
+        java.sql.Date Fecha = (fechaEntrega != null) ? new java.sql.Date(fechaEntrega.getTime()) : null;
+
+        int ponderado =student.getPonderado();
+       int Materias_idMaterias = student.getMateriasId();
+        try{
             Class.forName(DRIVER);
-        } catch (ClassNotFoundException e) {
+        }catch (ClassNotFoundException e){
             e.printStackTrace();
         }
+        try(
+                Connection connection = DriverManager.getConnection(URL, USER,PASSWORD);
+                Statement statement = connection.createStatement();
+        ){
+            String query = "INSERT INTO actividades VALUES('" + id + "','" + name  + "','" + city + "','" + Fecha +  "','" + ponderado + "','" + Materias_idMaterias +"')";
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO Actividades (actividadesNombre, tipoActividad, fechaEntrega, ponderado, Materias_idMaterias) VALUES (?, ?, ?, ?, ?)")
-        ) {
-            statement.setString(1, actividades.getActividadesNombre());
-            statement.setString(2, actividades.getTipoActividad().name());
-            statement.setDate(3, new java.sql.Date(actividades.getFechaEntrega().getTime()));
-            statement.setInt(4, actividades.getPonderado());
-            statement.setInt(5, actividades.getMateriasId());
+            int rows = statement.executeUpdate( query );
 
-            int rows = statement.executeUpdate();
-            return rows > 0;
+            return rows > 0 ? true : false;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        return false;
     }
+
 
     @Override
     public boolean delete(Integer id) {
         return false;
     }
+
+
+    @Override
+    public boolean update(Actividades materia) {
+        try {
+            Class.forName(DRIVER);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try (
+                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                // Usar PreparedStatement para la consulta SQL
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "UPDATE actividades SET actividadesNombre = ?, tipoActividad = ?, fechaEntrega = ?, Ponderado = ?, Materias_idMaterias = ? WHERE idActividades = ?")
+        ) {
+            // Configurar los parámetros en el PreparedStatement
+            preparedStatement.setString(1, materia.getActividadesNombre());
+            preparedStatement.setInt(2, materia.getIdActividades());
+            preparedStatement.setDate(3, new java.sql.Date(materia.getFechaEntrega().getTime()));
+            preparedStatement.setInt(4, materia.getPonderado());
+            preparedStatement.setInt(5, materia.getMateriasId());
+            preparedStatement.setInt(6, materia.getIdActividades());
+
+            // Ejecutar la actualización
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            return rowsAffected > 0; // Retorna verdadero si al menos una fila se vio afectada
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 
     public boolean delete(int id) {
         try {
@@ -133,35 +174,8 @@ public  class ActividadesDao implements InterfaceDAO<Actividades> {
         return false;
     }
 
-    public Actividades update(Actividades actividades) {
-        try {
-            Class.forName(DRIVER);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement("UPDATE Actividades SET actividadesNombre = ?, tipoActividad = ?, fechaEntrega = ?, ponderado = ?, Materias_idMaterias = ? WHERE idActividades = ?")
-        ) {
-            statement.setString(1, actividades.getActividadesNombre());
-            statement.setString(2, actividades.getTipoActividad().name());
-            statement.setDate(3, new java.sql.Date(actividades.getFechaEntrega().getTime()));
-            statement.setInt(4, actividades.getPonderado());
-            statement.setInt(5, actividades.getMateriasId());
-            statement.setInt(6, actividades.getIdActividades());
 
-            int rows = statement.executeUpdate();
-
-            if (rows > 0) {
-                return actividades;
-            } else {
-                return null; // O devuelve un valor apropiado en caso de fallo
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null; // O devuelve un valor apropiado en caso de excepción
-        }
-    }
 
 
     @Override

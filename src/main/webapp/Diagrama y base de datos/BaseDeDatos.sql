@@ -24,7 +24,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Materias` (
                                                  `idMaterias` INT NOT NULL AUTO_INCREMENT,
                                                  `nombreMateria` VARCHAR(45) NOT NULL,
                                                  `codigoMateria` INT NOT NULL,
+<<<<<<< HEAD
                                                  `notaFinal` DECIMAL(2) NOT NULL,
+=======
+                                                 `notaFinal` DECIMAL(60) NOT NULL,
+>>>>>>> 3b103f7 (trabajo)
                                                  PRIMARY KEY (`idMaterias`),
                                                  UNIQUE INDEX `idMaterias_UNIQUE` (`idMaterias` ASC) )
     ENGINE = InnoDB;

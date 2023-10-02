@@ -1,20 +1,21 @@
 package Logica;
 
 public class Materias {
-    int idMaterias;
+  int idMaterias;
   String nombreMateria;
   int codigoMateria;
-  double notaFinal;
+  double notaFinal=0;
+
 
     public Materias(String nombreMateria, int codigoMateria, double notaFinal) {
-
-    }
-
-    public Materias(int idMaterias, String nombreMateria, int codigoMateria, double notaFinal) {
         this.idMaterias = idMaterias;
         this.nombreMateria = nombreMateria;
         this.codigoMateria = codigoMateria;
         this.notaFinal = notaFinal;
+    }
+
+    public Materias() {
+
     }
 
     public int getIdMaterias() {

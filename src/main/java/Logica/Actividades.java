@@ -1,5 +1,6 @@
 package Logica;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Actividades {
@@ -10,14 +11,20 @@ public class Actividades {
     private int ponderado;
     private int materiasId; // Esto corresponde a la relación con Materias
 
-    public enum TipoActividad {
-        Evaluacion,
-        Talleres,
-        Proyecto,
-        Otros
+    public Actividades() {
+
     }
 
-    public Actividades() {
+    public enum TipoActividad {
+
+        Talleres,
+        Proyecto,
+        Evalucion,
+        Otros;
+
+    }
+
+    public Actividades(String trabajo, String taller, LocalDate localDate, int i, int i1) {
         // Constructor vacío
     }
 

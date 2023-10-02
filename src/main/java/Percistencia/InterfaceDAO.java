@@ -11,5 +11,7 @@ public interface InterfaceDAO<T> extends AutoCloseable {
 
     boolean delete(Integer id);
 
-    T update (T object);
+    boolean update (T object);
+
+
 }

@@ -32,7 +32,7 @@ public class MateriasDao implements InterfaceDAO<Materias> {
                 int codigoMateria = rs.getInt("codigoMateria");
                 double notaFinal = rs.getDouble("notaFinal");
 
-                list.add(new Materias(idMaterias, nombreMateria, codigoMateria, notaFinal));
+                list.add(new Materias(nombreMateria, codigoMateria, notaFinal));
             }
 
             return list;
@@ -61,7 +61,7 @@ public class MateriasDao implements InterfaceDAO<Materias> {
                 int codigoMateria = rs.getInt("codigoMateria");
                 double notaFinal = rs.getDouble("notaFinal");
 
-                materia = new Materias(idMaterias, nombreMateria, codigoMateria, notaFinal);
+                materia = new Materias(nombreMateria, codigoMateria, notaFinal);
             }
 
             return materia;
@@ -73,13 +73,13 @@ public class MateriasDao implements InterfaceDAO<Materias> {
     @Override
     public boolean add(Materias student) {
 
-        String nombreMateria = student.getNombreMateria();
+        String id = "0";
 
-        int codigoMateria = student.getCodigoMateria();
+        String name = student.getNombreMateria();
 
-        double notaFinal = student.getNotaFinal();
+        Double city = student.getNotaFinal();
 
-
+        int birthday = student.getCodigoMateria();
 
         try{
             Class.forName(DRIVER);
@@ -90,7 +90,7 @@ public class MateriasDao implements InterfaceDAO<Materias> {
                 Connection connection = DriverManager.getConnection(URL, USER,PASSWORD);
                 Statement statement = connection.createStatement();
         ){
-            String query = "INSERT INTO materias (nombreMateria, codigoMateria, notaFinal) VALUES ('" + nombreMateria + "','" + codigoMateria + "','" + notaFinal + "')";
+            String query = "INSERT INTO materias VALUES('" + id + "','" + name  + "','" + birthday + "','" + city + "')";
 
             int rows = statement.executeUpdate( query );
 
@@ -100,6 +100,7 @@ public class MateriasDao implements InterfaceDAO<Materias> {
         }
 
     }
+
     @Override
     public boolean delete(Integer id) {
         // Agrega la lógica para eliminar un registro en la base de datos
@@ -107,10 +108,26 @@ public class MateriasDao implements InterfaceDAO<Materias> {
     }
 
     @Override
-    public Materias update(Materias materia) {
-        // Agrega la lógica para actualizar un registro en la base de datos
-        return null;
+    public boolean update(Materias materia) {
+        try {
+            Class.forName(DRIVER);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try (
+                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                Statement statement = connection.createStatement()
+        ) {
+            String query = "UPDATE materias SET nombreMateria = '" + materia.getNombreMateria() + "', codigoMateria = " + materia.getCodigoMateria() + ", notaFinal = " + materia.getNotaFinal() + " WHERE idMaterias = " + materia.getIdMaterias();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
+
+
 
     @Override
     public void close() throws Exception {
