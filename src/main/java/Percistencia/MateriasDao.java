@@ -30,9 +30,9 @@ public class MateriasDao implements InterfaceDAO<Materias> {
                 Integer idMaterias = rs.getInt("idMaterias"); // Corregido el índice a los nombres de las columnas
                 String nombreMateria = rs.getString("nombreMateria");
                 int codigoMateria = rs.getInt("codigoMateria");
-                double notaFinal = rs.getDouble("notaFinal");
 
-                list.add(new Materias(nombreMateria, codigoMateria, notaFinal));
+
+                list.add(new Materias(nombreMateria, codigoMateria));
             }
 
             return list;
@@ -59,9 +59,7 @@ public class MateriasDao implements InterfaceDAO<Materias> {
                 Integer idMaterias = rs.getInt("idMaterias");
                 String nombreMateria = rs.getString("nombreMateria");
                 int codigoMateria = rs.getInt("codigoMateria");
-                double notaFinal = rs.getDouble("notaFinal");
-
-                materia = new Materias(nombreMateria, codigoMateria, notaFinal);
+                materia = new Materias(nombreMateria, codigoMateria);
             }
 
             return materia;
@@ -77,7 +75,7 @@ public class MateriasDao implements InterfaceDAO<Materias> {
 
         String name = student.getNombreMateria();
 
-        Double city = student.getNotaFinal();
+
 
         int birthday = student.getCodigoMateria();
 
@@ -90,7 +88,7 @@ public class MateriasDao implements InterfaceDAO<Materias> {
                 Connection connection = DriverManager.getConnection(URL, USER,PASSWORD);
                 Statement statement = connection.createStatement();
         ){
-            String query = "INSERT INTO materias VALUES('" + id + "','" + name  + "','" + birthday + "','" + city + "')";
+            String query = "INSERT INTO materias VALUES('" + id + "','" + name  + "','" + birthday +  "')";
 
             int rows = statement.executeUpdate( query );
 
@@ -108,6 +106,7 @@ public class MateriasDao implements InterfaceDAO<Materias> {
     }
 
     @Override
+
     public boolean update(Materias materia) {
         try {
             Class.forName(DRIVER);
@@ -117,15 +116,21 @@ public class MateriasDao implements InterfaceDAO<Materias> {
         }
         try (
                 Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                Statement statement = connection.createStatement()
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE materias SET nombreMateria = ?, codigoMateria = ? WHERE idMaterias = ?")
         ) {
-            String query = "UPDATE materias SET nombreMateria = '" + materia.getNombreMateria() + "', codigoMateria = " + materia.getCodigoMateria() + ", notaFinal = " + materia.getNotaFinal() + " WHERE idMaterias = " + materia.getIdMaterias();
-            statement.executeUpdate(query);
+            preparedStatement.setString(1, materia.getNombreMateria());
+            preparedStatement.setInt(2, materia.getCodigoMateria());
+            preparedStatement.setInt(3, materia.getIdMaterias());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            return rowsUpdated > 0; // Devuelve true si se actualizó al menos una fila, de lo contrario, devuelve false.
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
+
 
 
 

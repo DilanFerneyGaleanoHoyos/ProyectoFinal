@@ -182,4 +182,7 @@ public  class ActividadesDao implements InterfaceDAO<Actividades> {
     public void close() throws Exception {
 
     }
+
+
+
 }

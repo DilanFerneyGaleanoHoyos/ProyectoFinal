@@ -8,7 +8,7 @@
     <title>Menú lateral responsive - MagtimusPro</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="estilos.css">
     
 
     <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
@@ -68,6 +68,6 @@
     
     </main>
 
-    <script src="js/script.js"></script>
+    <script src="script1.js"></script>
 </body>
 </html>

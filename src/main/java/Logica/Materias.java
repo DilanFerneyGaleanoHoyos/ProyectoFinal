@@ -4,18 +4,23 @@ public class Materias {
   int idMaterias;
   String nombreMateria;
   int codigoMateria;
-  double notaFinal=0;
 
 
-    public Materias(String nombreMateria, int codigoMateria, double notaFinal) {
+
+    public Materias(String nombreMateria, int codigoMateria) {
         this.idMaterias = idMaterias;
         this.nombreMateria = nombreMateria;
         this.codigoMateria = codigoMateria;
-        this.notaFinal = notaFinal;
+
     }
 
     public Materias() {
 
+    }
+    public Materias(int idMaterias, String nombreMateria, int codigoMateria) {
+        this.idMaterias = idMaterias;
+        this.nombreMateria = nombreMateria;
+        this.codigoMateria = codigoMateria;
     }
 
     public int getIdMaterias() {
@@ -42,13 +47,7 @@ public class Materias {
         this.codigoMateria = codigoMateria;
     }
 
-    public double getNotaFinal() {
-        return notaFinal;
-    }
 
-    public void setNotaFinal(double notaFinal) {
-        this.notaFinal = notaFinal;
-    }
 
     @Override
     public String toString() {
@@ -56,7 +55,6 @@ public class Materias {
                 "idMaterias=" + idMaterias +
                 ", nombreMateria='" + nombreMateria + '\'' +
                 ", codigoMateria=" + codigoMateria +
-                ", notaFinal=" + notaFinal +
                 '}';
     }
 }

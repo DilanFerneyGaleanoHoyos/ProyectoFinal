@@ -20,7 +20,7 @@ if (window.innerWidth < 760){
     side_menu.classList.add("menu__side_move");
 }
 
-//Haciendo el menú responsive(adaptable)
+
 
 window.addEventListener("resize", function(){
 
@@ -37,3 +37,6 @@ window.addEventListener("resize", function(){
     }
 
 });
+
+
+
